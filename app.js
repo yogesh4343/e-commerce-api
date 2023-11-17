@@ -1,5 +1,6 @@
 const express = require('express')
 const dotenv = require("dotenv")
+const cors = require("cors")
 const mongoose = require('mongoose')
 const cookieParser = require("cookie-parser")
 const router = require('./Routes/UserRoutes')
@@ -11,20 +12,28 @@ const path = require('path')
 
 
 const app = express()
+app.use(cors())
 
+
+
+app.use(`/`,(req,res, next)=>{
+    res.setHeader("Access-Control-Allow-Credentials","true");
+    // console.log("Request was made");
+    res.send("Request is running.");
+})
 
 
 // connect to config -> config.env 
 
-dotenv.config({path:"backend/config/config.env"})
+// dotenv.config({path:"backend/config/config.env"})
 
 
 // static 
-app.use(express.static(path.join(__dirname, '../../frontend/build')))
+// app.use(express.static(path.join(__dirname, '../../frontend/build')))
 
-app.get('*' , function(req, res){
-    res.sendFile(path.join(__dirname , "../../frontend/build/index.html"))
-})  
+// app.get('*' , function(req, res){
+//     res.sendFile(path.join(__dirname , "../../frontend/build/index.html"))
+// })  
 
 
 
